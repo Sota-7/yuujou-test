@@ -5,8 +5,8 @@
       {
         "appID": "82W29FYP37.com.example.FriendshipTest",
         "paths": [
-          "/FriendshipTest-link/join/*",
-          "/FriendshipTest-link/join"
+          "/yuujou-test/join/*",
+          "/yuujou-test/join"
         ]
       }
     ]
