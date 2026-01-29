@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友情テスト - 友達との相性を診断しよう</title>
+    <meta name="description" content="友達と一緒に質問に答えて、2人の相性を診断しよう！">
+    <meta property="og:title" content="友情テスト">
+    <meta property="og:description" content="友達との相性を診断しよう！">
+    <meta property="og:image" content="https://sota-7.github.io/FriendshipTest-link/ogp.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤝</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 50%, #F97316 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 40px 32px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 16px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 12px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        .subtitle {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            margin-bottom: 32px;
+        }
+        .code-box {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .code-label {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .code {
+            color: white;
+            font-size: 36px;
+            font-weight: bold;
+            font-family: 'SF Mono', Monaco, monospace;
+            letter-spacing: 4px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        .download-btn {
+            display: block;
+            background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+            color: white;
+            text-decoration: none;
+            padding: 18px 32px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 32px rgba(255, 107, 107, 0.5);
+        }
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        .instructions {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        .instructions ol {
+            text-align: left;
+            padding-left: 24px;
+            margin-top: 12px;
+        }
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        .footer {
+            margin-top: 24px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 12px;
+        }
+        .loading {
+            display: none;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 16px;
+        }
+        .loading.show {
+            display: block;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="emoji">🤝</div>
+        <h1>友情テスト</h1>
+        <p class="subtitle">友達からの招待が届いています！</p>
+
+        <div class="code-box">
+            <p class="code-label">参加コード</p>
+            <p class="code" id="code">------</p>
+        </div>
+
+        <p class="loading" id="loading">
+            <span class="spinner"></span>アプリを起動中...
+        </p>
+
+        <a href="#" class="download-btn" id="downloadBtn">
+            📲 アプリをダウンロード
+        </a>
+
+        <div class="instructions">
+            <p>参加方法</p>
+            <ol>
+                <li>アプリをダウンロード</li>
+                <li>「テストに参加」をタップ</li>
+                <li>上のコードを入力</li>
+            </ol>
+        </div>
+
+        <p class="footer">© 2024 友情テスト</p>
+    </div>
+
+    <script>
+        // URLからコードを取得
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code') || '------';
+        document.getElementById('code').textContent = code;
+
+        // App Store URL (TODO: 実際のApp Store IDに変更)
+        const appStoreUrl = 'https://apps.apple.com/app/id0000000000';
+
+        // カスタムURLスキーム
+        const appScheme = 'yuujoutest://join?code=' + code;
+
+        // ダウンロードボタンのリンク設定
+        document.getElementById('downloadBtn').href = appStoreUrl;
+
+        // アプリがインストールされているか確認して開く
+        function tryOpenApp() {
+            const loading = document.getElementById('loading');
+            loading.classList.add('show');
+
+            // アプリを開こうとする
+            window.location.href = appScheme;
+
+            // 2秒後にまだこのページにいたら、アプリがないと判断
+            setTimeout(function() {
+                loading.classList.remove('show');
+            }, 2000);
+        }
+
+        // ページ読み込み時に自動でアプリを開こうとする
+        if (code !== '------') {
+            setTimeout(tryOpenApp, 500);
+        }
+    </script>
+</body>
+</html>
